@@ -11,7 +11,7 @@ torch.manual_seed(7)
 
 
 class RLP(torch.nn.Module):
-    def __init__(self, INPUT_SIZE, HIDDEN_SIZE, NUM_LAYER, OUT_SIZE, KERNEL_SIZE, OUT_CHANNEL, STRIDE, MAXPOOL_NUM, NUM_HIGH_WAY, BATCH_FIRST = True, CODE_DIM = 10,
+    def __init__(self, INPUT_SIZE, HIDDEN_SIZE, NUM_LAYER, OUT_SIZE, KERNEL_SIZE, OUT_CHANNEL, STRIDE, MAXPOOL_NUM, NUM_HIGH_WAY, BATCH_FIRST = True, CODE_DIM = 30,
      lambda1 = 1e-3, lambda2 = 1, lambda3 = 1e-3):
         super(RLP, self).__init__() 
         INPUT_SIZE_RNN = INPUT_SIZE  
@@ -126,12 +126,13 @@ class RLP(torch.nn.Module):
     	X_out4 = torch.cat([X_out2, X_out3], 1)
     	#print(X_out4.requires_grad)
     	#X_out6 = F.softmax(self.out3(X_out2))  ## only x_i 
-    	#X_out6 = F.softmax(self.out5(X_out3)) ## only r_i
-    	X_out6 = F.softmax(self.out4(X_out4))  ## [x_i, r_i]
+    	X_out6 = F.softmax(self.out5(X_out3)) ## only r_i
+    	#X_out6 = F.softmax(self.out4(X_out4))  ## [x_i, r_i]
     	l1loss = nn.L1Loss()
     	loss1 = torch.norm(X_out2.transpose(0,1) - torch.mm(self.dictionary, X_out3.transpose(0,1)))**2  + self.lambda3 * l1loss(X_out3, torch.zeros_like(X_out3))
     	loss2 = self.lambda2 * torch.norm(self.dictionary)**2
     	loss = loss1 + loss2
+    	print(loss.data, end = ' ')
     	return X_out6, loss 
 
 

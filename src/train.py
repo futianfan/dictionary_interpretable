@@ -31,7 +31,7 @@ embeddic = embedding2dic(EmbedFile)
 for k,v in embeddic.items():
 	INPUT_SIZE, = v.shape
 	break 
-HIDDEN_SIZE = 30    ### hidden 30 (converge faster) => 100 (converge slower) 
+HIDDEN_SIZE = 50    ### hidden 30 (converge faster) => 100 (converge slower) 
 OUT_SIZE = 30
 NUM_LAYER = 1
 BATCH_FIRST = True 
